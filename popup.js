@@ -79,7 +79,7 @@ function onKeyDown(e) {
 }
 
 function renderTabEntry(tab) {
-  const li = createResultItem(tab.favIconUrl || 'icons/icon.png', tab.title || tab.url);
+  const li = createResultItem(tab.favIconUrl || 'icon.png', tab.title || tab.url);
 
   li.addEventListener('click', () => {
     chrome.tabs.update(tab.id, { active: true });

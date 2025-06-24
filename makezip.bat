@@ -10,17 +10,17 @@ if exist %TEMPDIR% rmdir /s /q %TEMPDIR%
 
 rem Create temp structure
 mkdir %TEMPDIR%
-mkdir %TEMPDIR%\icons
 
 rem Copy files
+copy /y background.js %TEMPDIR%\ >nul
 copy /y fuzzy.js %TEMPDIR%\ >nul
 copy /y manifest.json %TEMPDIR%\ >nul
 copy /y popup.html %TEMPDIR%\ >nul
 copy /y popup.js %TEMPDIR%\ >nul
 copy /y style.css %TEMPDIR%\ >nul
-copy /y icons\icon.png %TEMPDIR%\icons\ >nul
+copy /y icon.png %TEMPDIR%\ >nul
 
-rem Create zip using built-in PowerShell Compress-Archive
+rem Use PowerShell to zip from inside the temp dir to preserve folder structure
 powershell -Command "Compress-Archive -Path '%TEMPDIR%\*' -DestinationPath '%ZIPNAME%'"
 
 rem Clean up temp
