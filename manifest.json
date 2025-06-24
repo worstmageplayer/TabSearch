@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Fuzzy Tab Search",
+  "name": "Tab Search",
   "version": "1.0",
-  "description": "Quick fuzzy tab switcher",
+  "description": "Tab Search",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
