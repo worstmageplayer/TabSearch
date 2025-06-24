@@ -3,15 +3,19 @@
   "name": "Tab Search",
   "version": "1.0",
   "description": "Tab Search",
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "32": "icons/icon.png"
     }
   },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "permissions": ["tabs", "activeTab", "commands"],
   "commands": {
-    "_execute_action": {
+    "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+F"
       },
@@ -22,3 +26,4 @@
     "32": "icons/icon.png"
   }
 }
+
