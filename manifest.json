@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tab Search",
-  "version": "1.5",
+  "version": "1.7",
   "description": "Tab Search",
   "action": {
     "default_popup": "popup.html",

@@ -12,58 +12,36 @@ function fuzzyScore(pattern, target) {
 
   let score = 0;
   let patternIdx = 0;
-  let consecutive = 0;
-  let firstMatchIdx = -1;
 
   for (let i = 0; i < target.length && patternIdx < pattern.length; i++) {
     if (target[i] === pattern[patternIdx]) {
-      if (firstMatchIdx === -1) firstMatchIdx = i;
 
       if (i > 0 && target[i - 1] === pattern[patternIdx - 1]) {
-        consecutive += 1;
-        score += 10;
-      } else {
-        score += 5;
-        consecutive = 0;
-      }
+          score += 10;
+      } else score += 5;
 
       patternIdx++;
     } else {
       score -= 1;
-      consecutive = 0;
     }
   }
 
-  if (patternIdx !== pattern.length) return null;
+  return patternIdx === pattern.length ? score : null;
+}
 
-  score += Math.max(0, 20 - firstMatchIdx);
-
+function baseScore(score) {
+  if (score === null) return 0;
   return score;
 }
 
-function baseScore(score, exact, target, term) {
-  const maxScore = 100;
-
-  if (exact) return maxScore;
-  if (score === null) return 0;
-
-  if (target.startsWith(term)) return Math.max(maxScore - 5, score);
-
-  return Math.max(0, score);
-}
-
 function scoreTermAgainstFields(term, domain, url, title) {
-  const dExact = domain.includes(term);
-  const tExact = title.includes(term);
-  const uExact = url.includes(term);
-
   const dScore = fuzzyScore(term, domain);
   const tScore = fuzzyScore(term, title);
   const uScore = fuzzyScore(term, url);
 
-  return baseScore(dScore, dExact, domain, term) * 3.0 +
-         baseScore(tScore, tExact, title, term) * 1.5 +
-         baseScore(uScore, uExact, url, term) * 1.0;
+  return baseScore(dScore) * 2.0 +
+         baseScore(tScore) * 1.5 +
+         baseScore(uScore) * 1.0;
 }
 
 function getFuzzyMatches(tabs, input, maxResults = 10) {
