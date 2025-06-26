@@ -26,8 +26,8 @@ function onInput(e) {
   resultsList.innerHTML = '';
 
   if (!query) {
-    resultsList.style.display = 'none';
-    searchInput.style.marginBottom = '0px';
+    selectedIndex = 0;
+    tabs.forEach(renderTabEntry);
     return;
   }
 

@@ -30,21 +30,17 @@ function fuzzyScore(pattern, target) {
 }
 
 function baseScore(score) {
-  if (score === null) return 0;
-  return score;
+  return score ?? 0;
 }
 
-function scoreTermAgainstFields(term, domain, url, title) {
+function scoreTermAgainstFields(term, domain, title) {
   const dScore = fuzzyScore(term, domain);
   const tScore = fuzzyScore(term, title);
-  const uScore = fuzzyScore(term, url);
 
-  return baseScore(dScore) * 2.0 +
-         baseScore(tScore) * 1.5 +
-         baseScore(uScore) * 1.0;
+  return baseScore(dScore) * 1.5 + baseScore(tScore)
 }
 
-function getFuzzyMatches(tabs, input, maxResults = 10) {
+function getFuzzyMatches(tabs, input) {
   const terms = input.toLowerCase().split(/\s+/).filter(Boolean);
   if (!terms.length) return [];
 
@@ -52,17 +48,13 @@ function getFuzzyMatches(tabs, input, maxResults = 10) {
 
   for (const tab of tabs) {
     const urlRaw = tab.url || '';
-    const titleRaw = tab.title || '';
+    const title = tab.title || '';
     const domain = getDomain(urlRaw);
-
-    const url = urlRaw.toLowerCase();
-    const title = titleRaw.toLowerCase();
-    const domainLower = domain.toLowerCase();
 
     let totalScore = 0;
 
     for (const term of terms) {
-      totalScore += scoreTermAgainstFields(term, domainLower, url, title);
+      totalScore += scoreTermAgainstFields(term, domain, title);
     }
 
     if (totalScore === 0) continue;
@@ -71,7 +63,6 @@ function getFuzzyMatches(tabs, input, maxResults = 10) {
 
   return results
     .sort((a, b) => b.score - a.score)
-    .slice(0, maxResults)
     .map(r => r.tab);
 }
 
