@@ -32,7 +32,7 @@ function scoreTermAgainstFields(term, domain, title) {
   const dScore = fuzzyScore(term, domain);
   const tScore = fuzzyScore(term, title);
 
-  return dScore * 1.5 + tScore;
+  return Math.max(dScore * 1.5, tScore);
 }
 
 function getFuzzyMatches(tabs, input) {
@@ -50,7 +50,7 @@ function getFuzzyMatches(tabs, input) {
         0
       );
 
-      // console.log('Checking tab:', domain, title, '→ Score:', totalScore);
+      console.log(`Tab: ${domain}, ${title} → Score: ${totalScore} Input: ${input}`);
       return totalScore > 0 ? { tab, score: totalScore } : null;
     })
     .filter(Boolean)
