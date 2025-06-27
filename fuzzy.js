@@ -9,16 +9,18 @@ function getDomain(url) {
 function fuzzyScore(pattern, target) {
   let score = 0;
   let patternIdx = 0;
+  let startMatch = false;
 
   for (let i = 0; i < target.length && patternIdx < pattern.length; i++) {
     if (target[i] === pattern[patternIdx]) {
+      startMatch = true;
 
       if (i > 0 && target[i - 1] === pattern[patternIdx - 1]) {
-          score += 10;
+        score += 10;
       } else score += 5;
 
       patternIdx++;
-    } else {
+    } else if (startMatch) {
       score -= 1;
     }
   }
@@ -48,6 +50,7 @@ function getFuzzyMatches(tabs, input) {
         0
       );
 
+      console.log('Checking tab:', domain, title, '→ Score:', totalScore);
       return totalScore > 0 ? { tab, score: totalScore } : null;
     })
     .filter(Boolean)
