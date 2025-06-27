@@ -99,13 +99,17 @@ function renderTabEntry(tab) {
 
 function renderSearchEntry(query) {
   const isDomain = /^[a-zA-Z0-9.-]+\.[a-z]{2,}$/.test(query);
-  const targetUrl = isDomain
-    ? `https://${query}`
-    : `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-  const iconUrl = isDomain
-    ? `https://www.google.com/s2/favicons?sz=64&domain=${query}`
-    : `https://www.google.com/s2/favicons?sz=64&domain=google.com`;
-  const label = isDomain ? `Open ${query}` : `Search "${query}" on Google`;
+  let targetUrl, iconUrl, label;
+
+  if (isDomain) {
+    targetUrl = `https://${query}`
+    iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${query}`
+    label = `Open ${query}`
+  } else {
+    targetUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+    iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=google.com`
+    label =  `Search "${query}" on Google`
+  }
 
   const li = createResultItem(iconUrl, label);
 
