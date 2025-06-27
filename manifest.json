@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Tab Search",
-  "version": "1.10",
+  "version": "1.11",
+  :w
   "description": "Tab Search",
   "action": {
     "default_popup": "popup.html",
