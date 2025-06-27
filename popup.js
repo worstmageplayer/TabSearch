@@ -27,6 +27,7 @@ function onInput(e) {
 
   if (!query) {
     selectedIndex = 0;
+    updateSelection()
     tabs.forEach(renderTabEntry);
     return;
   }
