@@ -50,7 +50,7 @@ function getFuzzyMatches(tabs, input) {
         0
       );
 
-      console.log(`Tab: ${domain}, ${title} → Score: ${totalScore} Input: ${input}`);
+      // console.log(`Tab: ${domain}, ${title} → Score: ${totalScore} Input: ${input}`);
       return totalScore > 0 ? { tab, score: totalScore } : null;
     })
     .filter(Boolean)
