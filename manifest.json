@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tab Search",
-  "version": "1.12",
+  "version": "1.6",
   "description": "Tab Search",
   "action": {
     "default_popup": "popup.html",
@@ -23,7 +23,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "{4c3d1f3f-74f2-4e36-a692-ba1e0237c075}"
+      "id": "{3c3d1f3f-74f2-4e36-a692-ba1e0237c075}"
     }
   }
 }
