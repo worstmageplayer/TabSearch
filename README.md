@@ -1,4 +1,4 @@
-### Tab Search
+# Tab Search
 
 
 Ctrl + Shift + F to open the search bar
