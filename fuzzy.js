@@ -16,8 +16,8 @@ function fuzzyScore(pattern, target) {
       startMatch = true;
 
       if (i > 0 && target[i - 1] === pattern[patternIdx - 1]) {
-        score += 10;
-      } else score += 5;
+        score += 20;
+      } else score += 10;
 
       patternIdx++;
     } else if (startMatch) {
