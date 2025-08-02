@@ -39,21 +39,27 @@ function getFuzzyMatches(tabs, input) {
   const terms = input.toLowerCase().split(/\s+/).filter(Boolean);
   if (!terms.length) return [];
 
-  return tabs
-    .map(tab => {
+  let filtered = tabs.map(tab => {
       const url = tab.url || '';
-      const title = (tab.title || '').toLowerCase();
-      const domain = getDomain(url).toLowerCase();
+      return {
+          ...tab,
+          domain: getDomain(url).toLowerCase(),
+          title: (tab.title || '').toLowerCase(),
+      }
+  });
 
-      const totalScore = terms.reduce(
-        (score, term) => score + scoreTermAgainstFields(term, domain, title),
-        0
-      );
+  for (const term of terms) {
+    const scored = filtered
+      .map(item => {
+        const score = scoreTermAgainstFields(term, item.domain, item.title);
+        return score > 0 ? { tab: item, score } : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score);
 
-      // console.log(`Tab: ${domain}, ${title} → Score: ${totalScore} Input: ${input}`);
-      return totalScore > 0 ? { tab, score: totalScore } : null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.score - a.score)
-    .map(r => r.tab);
+    filtered = scored.map(r => r.tab);
+    if (filtered.length === 0) break;
+  }
+
+  return filtered;
 }
