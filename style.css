@@ -21,7 +21,6 @@ body {
   box-sizing: border-box;
   outline: none;
   margin-bottom: 0px;
-  transition: margin-bottom 0.2s ease;
 }
 
 #results {
@@ -41,7 +40,6 @@ body {
   border-radius: 4px;
   margin-bottom: 2px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
   user-select: none;
 }
 
