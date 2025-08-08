@@ -12,7 +12,7 @@ chrome.tabs.query({}, (foundTabs) => {
 
 window.addEventListener('DOMContentLoaded', () => {
     searchInput.style.marginBottom = '0px';
-    setTimeout(() => searchInput.focus(), 10);
+    setTimeout(() => searchInput.focus(), 50);
 });
 
 window.addEventListener('mousemove', () => {
