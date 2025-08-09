@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tab Search",
-  "version": "1.9",
+  "version": "1.10",
   "description": "Tab Search",
   "action": {
     "default_popup": "popup.html",
@@ -9,7 +9,7 @@
       "32": "icon.png"
     }
   },
-  "permissions": ["tabs", "activeTab", "search"],
+  "permissions": ["tabs", "activeTab"],
   "commands": {
     "_execute_action": {
       "suggested_key": {
