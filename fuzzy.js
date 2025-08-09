@@ -15,18 +15,30 @@ function fuzzyScore(pattern, target) {
   const targetLength = target.length;
 
   for (let i = 0; i < targetLength && patternIndex < patternLength; i++) {
-    if (target[i].toLowerCase() === pattern[patternIndex].toLowerCase()) {
+    const tChar = target[i];
+    const pChar = pattern[patternIndex];
+
+    if (tChar.toLowerCase() === pChar.toLowerCase()) {
       startMatch = true;
-      if (i > 0 && target[i - 1].toLowerCase() === pattern[patternIndex - 1].toLowerCase()) {
-        score += 20;
-      } else {
+
+      score += 10;
+
+      if (
+        patternIndex > 0 && i > 0 &&
+        target[i - 1].toLowerCase() === pattern[patternIndex - 1].toLowerCase()
+      ) {
         score += 10;
       }
-      if (target[i] === pattern[patternIndex]) score += 3;
+
+      if (tChar === pChar) {
+        score += 5;
+      }
+
       patternIndex++;
     } else if (startMatch) {
       score -= 1;
     }
+
     if (targetLength - i < patternLength - patternIndex) return 0;
   }
 

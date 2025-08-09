@@ -107,6 +107,13 @@ function onKeyDown(e) {
     }
 }
 
+function isDomain(str) {
+    if (typeof str !== 'string') return false;
+    const domain = str.split('/')[0];
+    const domainRegex = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/;
+    return domainRegex.test(domain);
+}
+
 function handleResultClick(e) {
     const li = e.target.closest('li');
     if (!li) return;
@@ -120,10 +127,8 @@ function handleResultClick(e) {
         chrome.tabs.update(result.data.id, { active: true });
         chrome.windows.update(result.data.windowId, { focused: true });
     } else if (result.type === 'search') {
-        const query = result.data.query;
-        const isDomain = /^[a-zA-Z0-9.-]+\.[a-z]{2,}$/.test(query);
-        const targetUrl = isDomain
-            ? `https://${query}`
+        const targetUrl = isDomain(result.data.query)
+            ? `https://${result.data.query}`
             : `https://www.google.com/search?q=${encodeURIComponent(query)}`;
         chrome.tabs.create({ url: targetUrl });
     }
@@ -154,10 +159,9 @@ function renderTabEntry(tab, index) {
 }
 
 function renderSearchEntry(query, index) {
-    const isDomain = /^[a-zA-Z0-9.-]+\.[a-z]{2,}$/.test(query);
     let iconUrl, label;
 
-    if (isDomain) {
+    if (isDomain(query)) {
         iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${query}`;
         label = `Open ${query}`;
     } else {

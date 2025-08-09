@@ -9,7 +9,7 @@
       "32": "icon.png"
     }
   },
-  "permissions": ["tabs", "activeTab"],
+  "permissions": ["tabs", "activeTab", "search"],
   "commands": {
     "_execute_action": {
       "suggested_key": {
