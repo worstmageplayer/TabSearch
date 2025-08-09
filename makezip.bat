@@ -26,6 +26,6 @@ powershell -Command "Compress-Archive -Path '%TEMPDIR%\*' -DestinationPath '%ZIP
 rem Clean up temp
 rmdir /s /q %TEMPDIR%
 
-echo ✅ Created %ZIPNAME%
+echo Created %ZIPNAME%
 pause
 
