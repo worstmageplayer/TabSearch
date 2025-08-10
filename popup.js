@@ -115,6 +115,16 @@ function isDomain(str) {
 }
 
 function handleResultClick(e) {
+    const closeBtn = e.target.closest('.close-btn');
+    if (closeBtn) {
+        const tabId = parseInt(closeBtn.dataset.tabId);
+        chrome.tabs.remove(tabId, () => {
+            tabs = tabs.filter(t => t.id !== tabId);
+            onInput({ target: searchInput });
+        });
+        return;
+    }
+
     const li = e.target.closest('li');
     if (!li) return;
 
@@ -129,7 +139,7 @@ function handleResultClick(e) {
     } else if (result.type === 'search') {
         const targetUrl = isDomain(result.data.query)
             ? `https://${result.data.query}`
-            : `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            : `https://www.google.com/search?q=${encodeURIComponent(result.data.query)}`;
         chrome.tabs.create({ url: targetUrl });
     }
 
@@ -153,7 +163,9 @@ function renderTabEntry(tab, index) {
     const li = createResultItem(
         tab.favIconUrl || 'icon.png',
         tab.title || tab.url,
-        index
+        index,
+        true,
+        tab.id
     );
     resultsList.appendChild(li);
 }
@@ -173,7 +185,7 @@ function renderSearchEntry(query, index) {
     resultsList.appendChild(li);
 }
 
-function createResultItem(iconSrc, labelText, index) {
+function createResultItem(iconSrc, labelText, index, isTab = false, tabId = null) {
     const li = document.createElement('li');
     li.className = 'result-item';
     li.dataset.index = index;
@@ -194,6 +206,15 @@ function createResultItem(iconSrc, labelText, index) {
 
     li.appendChild(icon);
     li.appendChild(label);
+
+    if (isTab) {
+        const closeBtn = document.createElement('span');
+        closeBtn.innerHTML = '&#10006';
+        closeBtn.className = 'close-btn';
+        closeBtn.dataset.tabId = tabId;
+        li.appendChild(closeBtn);
+    }
+
     return li;
 }
 
